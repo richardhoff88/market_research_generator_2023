@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Article Database</title>
+    <style>
+        .article-text {
+            white-space: pre-line;
+        }
+        .article-image {
+            width: 100%;   /* Width relative to the container */
+            max-width: 300px; /* Maximum width */
+            height: auto;  /* Height adjusts automatically */
+        }
+    </style>
+</head>
+<body>
+    <h1>Modulus Articles</h1>
+    <ul>
+        {% for article in articles %}
+        <li>
+            {% if article.image %}
+                <img src="{{ article.image }}" alt="Article Image" class="article-image"><br>
+            {% endif %}
+            <strong>{{ article.title }}</strong>
+            <p class="article-text">{{ article.text | replace('\n', '<br>') | safe }}</p>
+            <p><strong>Read more:</strong> <a href="{{ article.source }}">{{ article.source }}</a></p>
+            <form method="POST" action="/remove/{{ article.title }}">
+                <button type="submit">Remove</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
